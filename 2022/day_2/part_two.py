@@ -12,3 +12,7 @@ print(f"numbers(data): {common_functions.get_array_of_numbers(data)}\n\n")
 input_data = common_functions.get_array_of_strings(data)
 
 print(f"input_data: {input_data}")
+
+# Try this for submitting...
+# from aocd import submit
+# submit(my_answer, part="b", day=2, year=2022)
