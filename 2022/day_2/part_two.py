@@ -37,30 +37,41 @@ def get_win_draw_score(opponent, player):
     # Loss
     return 0
 
-def get_challenger_choise(opponent, challenger):
-    # To be refactored...
-    if challenger == 'X':
-        if opponent == 'A':
-            challenger_new = 'Z'
-        if opponent == 'B':
-            challenger_new = 'X'
-        if opponent == 'C':
-            challenger_new = 'Y'
-    if challenger == 'Y':
-        if opponent == 'A':
-            challenger_new = 'X'
-        if opponent == 'B':
-            challenger_new = 'Y'
-        if opponent == 'C':
-            challenger_new = 'Z'
-    if challenger == 'Z':
-        if opponent == 'A':
-            challenger_new = 'Y'
-        if opponent == 'B':
-            challenger_new = 'Z'
-        if opponent == 'C':
-            challenger_new = 'X'
-    return challenger_new
+def get_loosing_strategy(opponent, player):
+    if get_RPS(opponent) == 'ROCK':
+        player_new = 'Z'
+    if get_RPS(opponent) == 'PAPER':
+        player_new = 'X'
+    if get_RPS(opponent) == 'SISSORS':
+        player_new = 'Y'
+    return player_new
+
+def get_draw_strategy(opponent, player):
+    if get_RPS(opponent) == 'ROCK':
+        player_new = 'X'
+    if get_RPS(opponent) == 'PAPER':
+        player_new = 'Y'
+    if get_RPS(opponent) == 'SISSORS':
+        player_new = 'Z'
+    return player_new
+
+def get_win_strategy(opponent, player):
+    if get_RPS(opponent) == 'ROCK':
+        player_new = 'Y'
+    if get_RPS(opponent) == 'PAPER':
+        player_new = 'Z'
+    if get_RPS(opponent) == 'SISSORS':
+        player_new = 'X'
+    return player_new
+
+def get_player_choise(opponent, player):
+    if player == 'X':
+        player_new = get_loosing_strategy(opponent, player)
+    if player == 'Y':
+        player_new = get_draw_strategy(opponent, player)                
+    if player == 'Z':
+        player_new = get_win_strategy(opponent, player)
+    return player_new
 
 def get_RPS(char):
     conversion_table = {'A': 'ROCK', 'X': 'ROCK', 'B':'PAPER', 'Y':'PAPER',  'C':'SISSORS', 'Z':'SISSORS'}
@@ -68,7 +79,7 @@ def get_RPS(char):
 
 score = 0
 for opponent, player in input_data:
-    player_new = get_challenger_choise(opponent, player)
+    player_new = get_player_choise(opponent, player)
     if get_RPS(player_new) == 'ROCK':
         score += 1
     if get_RPS(player_new) == 'PAPER':
