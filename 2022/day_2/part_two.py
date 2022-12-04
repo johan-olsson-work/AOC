@@ -15,48 +15,30 @@ test_data = [('A','Y'), ('B','X'), ('C','Z')]
 
 #print(f"input_data: {input_data}")
 
-#This strategy guide predicts and recommends the following:
+def is_draw(opponent, player):
+    return get_RPS(opponent) == get_RPS(player)
 
-#In the first round, your opponent will choose Rock (A), and you should choose Paper (Y). This ends in a win for you with a score of 8 (2 because you chose Paper + 6 because you won).
-#In the second round, your opponent will choose Paper (B), and you should choose Rock (X). This ends in a loss for you with a score of 1 (1 + 0).
-#The third round is a draw with 
-
-    # The winner of the whole tournament is the player with the highest score.
-    # Your total score is the sum of your scores for each round.
-    # The score for a single round is the score for the shape you selected (1 for Rock, 2 for Paper, and 3 for Scissors)
-    # plus the score for the outcome of the round (0 if you lost, 3 if the round was a draw, and 6 if you won).
-
-
-# "Anyway, the second column says how the round needs to end:
-# X means you need to lose,
-# Y means you need to end the round in a draw, and
-# Z means you need to win. Good luck!"
-    
-def it_is_a_draw(oponent, challenger):
-    if oponent == 'A' and challenger == 'X':
+def is_win(opponent, player):
+    if get_RPS(opponent) == 'ROCK' and get_RPS(player) == 'PAPER':
         return True
-    if oponent == 'B' and challenger == 'Y':
+    if get_RPS(opponent) == 'PAPER' and get_RPS(player) == 'SISSORS':
         return True
-    if oponent == 'C' and challenger == 'Z':
+    if get_RPS(opponent) == 'SISSORS' and get_RPS(player) == 'ROCK':
         return True
     return False
-    
-    
-def get_win_draw_score(oponent, challenger):
-    if it_is_a_draw(oponent, challenger):
+
+def get_win_draw_score(opponent, player):
+    # Draw
+    if is_draw(opponent, player):
         return 3
-    if oponent == 'A':
-        if challenger == 'Y':
-            return 6
-    if oponent == 'B':
-        if challenger == 'Z':
-            return 6
-    if oponent == 'C':
-        if challenger == 'X':
-            return 6
+    # Win
+    if is_win(opponent, player):
+        return 6
+    # Loss
     return 0
 
 def get_challenger_choise(opponent, challenger):
+    # To be refactored...
     if challenger == 'X':
         if opponent == 'A':
             challenger_new = 'Z'
@@ -80,18 +62,21 @@ def get_challenger_choise(opponent, challenger):
             challenger_new = 'X'
     return challenger_new
 
-score = 0
-for oponent, challenger in input_data:
-    challenger_new = get_challenger_choise(oponent, challenger)
-    if challenger_new == 'X':
-        score += 1
-    if challenger_new == 'Y':
-        score += 2
-    if challenger_new == 'Z':
-        score += 3
-    score += get_win_draw_score(oponent, challenger_new)
-    print(f"round: score: {score}")
+def get_RPS(char):
+    conversion_table = {'A': 'ROCK', 'X': 'ROCK', 'B':'PAPER', 'Y':'PAPER',  'C':'SISSORS', 'Z':'SISSORS'}
+    return conversion_table[char]
 
+score = 0
+for opponent, player in input_data:
+    player_new = get_challenger_choise(opponent, player)
+    if get_RPS(player_new) == 'ROCK':
+        score += 1
+    if get_RPS(player_new) == 'PAPER':
+        score += 2
+    if get_RPS(player_new) == 'SISSORS':
+        score += 3
+
+    score += get_win_draw_score(opponent, player_new)
 
     
 print(f"score: {score}")
@@ -99,5 +84,5 @@ print(f"score: {score}")
 
 
 # Try this for submitting...
-from aocd import submit
-submit(score, part="b", day=2, year=2022)
+#from aocd import submit
+#submit(score, part="b", day=2, year=2022)
