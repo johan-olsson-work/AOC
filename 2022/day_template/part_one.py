@@ -34,15 +34,22 @@ print("")
 # print(f"test_data: {test_data}")
 
 
-score = 0
+
+if __name__ == "__main__":
+    score = 0
 
 
 
 
 
-print(f"score: {score}")
 
-#submit(score, part="a", day=x, year=2022)
+
+
+
+
+    print(f"score: {score}")
+
+    #submit(score, part="a", day=x, year=2022)
 
 
 
